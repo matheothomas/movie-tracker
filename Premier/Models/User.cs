@@ -16,3 +16,8 @@ public class UserCreation {
 	public string Pseudo {get; set;}
 	public string Password {get; set;}
 }
+
+public class UserUpdate {
+	public string Pseudo {get; set;}
+	public string Password {get; set;}
+}
