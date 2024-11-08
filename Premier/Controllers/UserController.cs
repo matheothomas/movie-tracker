@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Premier.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Premier.Controllers
 {
@@ -37,11 +38,12 @@ namespace Premier.Controllers
 
 		[HttpPost("register")]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
-			User user = new User {
-				Pseudo = userCreation.Pseudo,
-				Password = userCreation.Password,
-				Role = Role.user,
-			};
+			var hasher = new PasswordHasher<User>();
+			var user = new User { Password = "" };
+
+			user.Password = hasher.HashPassword(user, userCreation.Password);
+			user.Pseudo = userCreation.Pseudo;
+
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
 

@@ -1,5 +1,7 @@
 
 namespace Premier;
+using Microsoft.AspNetCore.Identity;
+
 
 public class Program
 {
@@ -15,6 +17,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
 		builder.Services.AddDbContext<Models.UserContext>();
+		builder.Services.AddSingleton<PasswordHasher<Models.User>>();
+
 
         var app = builder.Build();
 
