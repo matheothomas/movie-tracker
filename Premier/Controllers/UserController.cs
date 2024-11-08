@@ -15,7 +15,7 @@ namespace Premier.Controllers
 			_context = ctx;
 		}
 
-		[HttpGet("All")]
+		[HttpGet("all")]
 		public async Task<ActionResult<IEnumerable<User>>> GetAllUser() {
 			return await _context.Users.ToArrayAsync();
 		}
@@ -35,11 +35,12 @@ namespace Premier.Controllers
 			return Ok(user);
 		}
 
-		[HttpPost("Add a user")]
+		[HttpPost("register")]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			User user = new User {
 				Pseudo = userCreation.Pseudo,
 				Password = userCreation.Password,
+				Role = Role.user,
 			};
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
