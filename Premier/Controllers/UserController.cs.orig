@@ -35,7 +35,11 @@ namespace Premier.Controllers
 			return Ok(user);
 		}
 
+<<<<<<< HEAD
 		[HttpPost("register")]
+=======
+		[HttpPost]
+>>>>>>> 952211567aa3a327897d717582d46f56dcd145e4
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			User user = new User {
 				Pseudo = userCreation.Pseudo,
