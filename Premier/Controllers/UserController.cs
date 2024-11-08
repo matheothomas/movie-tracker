@@ -35,7 +35,7 @@ namespace Premier.Controllers
 			return Ok(user);
 		}
 
-		[HttpPost("Add a user")]
+		[HttpPost]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			User user = new User {
 				Pseudo = userCreation.Pseudo,
@@ -46,6 +46,21 @@ namespace Premier.Controllers
 
 			return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
 		}
+
+		[HttpPost("login")]
+		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
+			User user = await _context.Users.FirstAsync(u => u.Pseudo==userLogin.Pseudo);
+			if (user == null) {
+				return NotFound();
+			}
+
+			if (userLogin.Password.Equals(user.Password)) {
+				return Ok(user);
+			}
+
+			return StatusCode(400, "Password do not match");
+		}
+
 
 		[HttpPut("{id}")]
 		public async Task<ActionResult<User>> PutUser(User userUpdate)
