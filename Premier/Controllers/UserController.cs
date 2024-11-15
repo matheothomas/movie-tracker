@@ -11,9 +11,11 @@ namespace Premier.Controllers
     public class UserController : ControllerBase {
 	
 		private readonly UserContext _context;
-		public UserController(UserContext ctx)
+		private readonly PasswordHasher<User> _hasher;
+		public UserController(UserContext ctx, PasswordHasher<User> hasher)
 		{
 			_context = ctx;
+			_hasher = hasher;
 		}
 
 		[HttpGet("all")]
@@ -38,10 +40,9 @@ namespace Premier.Controllers
 
 		[HttpPost("register")]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
-			var hasher = new PasswordHasher<User>();
 			var user = new User { Password = "" };
 
-			user.Password = hasher.HashPassword(user, userCreation.Password);
+			user.Password = _hasher.HashPassword(user, userCreation.Password);
 			user.Pseudo = userCreation.Pseudo;
 
 			_context.Users.Add(user);
@@ -53,11 +54,13 @@ namespace Premier.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
 			User user = await _context.Users.FirstAsync(u => u.Pseudo==userLogin.Pseudo);
+			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
+
 			if (user == null) {
 				return NotFound();
 			}
 
-			if (userLogin.Password.Equals(user.Password)) {
+			if (result == PasswordVerificationResult.Success) {
 				return Ok(user);
 			}
 
