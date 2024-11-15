@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+sing Microsoft.EntityFrameworkCore;
 
 namespace Premier.Models;
 
