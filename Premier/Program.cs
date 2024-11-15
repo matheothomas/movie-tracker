@@ -17,6 +17,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
 		builder.Services.AddDbContext<Models.UserContext>();
+		builder.Services.AddDbContext<Models.FavoriteContext>();
 		builder.Services.AddSingleton<PasswordHasher<Models.User>>();
 
 
