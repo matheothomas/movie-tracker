@@ -16,8 +16,8 @@ namespace Premier.Controllers
 
         // GET api/<Favorite>/5
         [HttpGet("{UserId}")]
-        public async Task<ActionResult<IEnumerable<int>>> GetFavorite() {
-            return await _context.Favorites.Select(f => f.FilmId).ToListAsync();
+        public async Task<ActionResult<IEnumerable<int>>> GetFavorite(int UserId) {
+            return await _context.Favorites.Where(f => UserId == f.UserId).Select(f => f.FilmId).ToListAsync();
         }
 
         // POST api/<Favorite>
