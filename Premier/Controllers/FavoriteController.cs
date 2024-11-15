@@ -8,7 +8,7 @@ namespace Premier.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Favorite : ControllerBase {
+    public class FavoriteController : ControllerBase {
 		private readonly UserContext _context;
 		public FavoriteController(UserContext ctx) {
 			_context = ctx;
