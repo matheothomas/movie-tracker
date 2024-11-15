@@ -5,35 +5,35 @@ namespace Premier.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Favoris : ControllerBase
+    public class Favorite : ControllerBase
     {
-        // GET: api/<Favoris>
+        // GET: api/<Favorite>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<Favoris>/5
+        // GET api/<Favorite>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<Favoris>
+        // POST api/<Favorite>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<Favoris>/5
+        // PUT api/<Favorite>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<Favoris>/5
+        // DELETE api/<Favorite>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
