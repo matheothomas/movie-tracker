@@ -13,4 +13,5 @@ public class UserContext : DbContext {
 
 	public DbSet<User> Users {get; set; } = null!;
 	public DbSet<Favorite> Favorites {get; set; } = null!;
+	public DbSet<Film> Films {get; set; } = null!;
 }
