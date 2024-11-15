@@ -24,9 +24,9 @@ namespace Premier.Controllers
 
         // GET api/<Film>
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<string>>> GetFilm(string title)
+        public async Task<ActionResult<IEnumerable<Film>>> GetFilm(string title)
         {
-            return await _context.Films.Select(f => f.Title == title).ToListAsync();
+            return await _context.Films.Where(f => f.Title == title).Select(f => f).ToListAsync();
         }
 
         [HttpGet("info")]
