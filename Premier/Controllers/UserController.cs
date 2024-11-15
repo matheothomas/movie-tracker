@@ -53,7 +53,7 @@ namespace Premier.Controllers
 
 		[HttpPost("login")]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
-			User user = await _context.Users.FirstAsync(u => u.Pseudo==userLogin.Pseudo);
+			User? user = await _context.Users.FirstOrDefaultAsync(u => u.Pseudo==userLogin.Pseudo);
 			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
 
 			if (user == null) {
@@ -71,7 +71,7 @@ namespace Premier.Controllers
 		[HttpPut("{id}")]
 		public async Task<ActionResult<User>> PutUser(User userUpdate)
 		{
-			User user = await _context.Users.FindAsync(userUpdate.Id);
+			User? user = await _context.Users.FindAsync(userUpdate.Id);
 			if (user == null)
 			{
 				return NotFound();
@@ -96,7 +96,7 @@ namespace Premier.Controllers
 		public async Task<IActionResult> DeleteUser(int id)
 		{
 			// on récupère la user que l'on souhaite supprimer
-			User user = await _context.Users.FindAsync(id);
+			User? user = await _context.Users.FindAsync(id);
 			if (user == null)
 			{
 				return NotFound();
