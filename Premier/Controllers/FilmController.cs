@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Premier.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Core;
 
 namespace Premier.Controllers
 {
@@ -26,13 +27,23 @@ namespace Premier.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilm(string title)
         {
-            return await _context.Films.Where(f => f.Title == title).Select(f => f).ToListAsync();
+            var films =  await _context.Films.Where(f => f.Title == title).Select(f => f).ToListAsync();
+			if (!films.Any()) {
+				return NotFound();
+			}
+
+			return Ok(films);
         }
 
         [HttpGet("info")]
-        public string GetFilms(int[] ids)
+        public async Task<ActionResult<IEnumerable<Film>>> GetInfoFilms([FromQuery] int[] ids)
         {
-            return "value";
+            var films = await _context.Films.Where(f => ids.Contains(f.Id)).Select(f => f).ToListAsync();
+			if (!films.Any()) {
+				return NotFound();
+			}
+
+			return Ok(films);
         }
     }
 }
