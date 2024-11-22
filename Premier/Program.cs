@@ -18,6 +18,7 @@ public class Program
 
 		builder.Services.AddDbContext<Models.UserContext>();
 		builder.Services.AddSingleton<PasswordHasher<Models.User>>();
+    builder.Services.AddHttpClient();
 
 
         var app = builder.Build();
