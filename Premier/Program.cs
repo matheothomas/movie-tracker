@@ -1,5 +1,6 @@
 
 namespace Premier;
+using Premier.Services;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -18,6 +19,7 @@ public class Program
 
 		builder.Services.AddDbContext<Models.UserContext>();
 		builder.Services.AddSingleton<PasswordHasher<Models.User>>();
+		builder.Services.AddSingleton<OMDBService>();
 
 
         var app = builder.Build();
