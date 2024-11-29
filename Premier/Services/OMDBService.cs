@@ -5,23 +5,40 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Core;
 
-namespace Premier.Service {
+namespace Premier.Services {
 
-  public class OmdbService {
-    HttpClient _client;
-    private readonly string _apiKey;
+	public class OMDBService {
+		HttpClient _client;
+		private readonly string _apiKey;
 
-    public OmdbService(HttpClient client, IConfiguration configuration) {
-      _client = client;
-      _apiKey = configuration["APIKey"];
-    }
+		public OMDBService(HttpClient client, IConfiguration configuration) {
+			_client = client;
+			_apiKey = configuration["APIKey"];
+		}
 
-    public async IAsyncEnumerable<Film> SearchByTitle(string title) {
-      HttpResponseMessage response = await client.GetAsync($"http://www.omdbapi.com/?i={title}&apikey={_apiKey}");
-      // CALL JSON convert
-    }
+		public async Task<List<Film>> SearchByTitle(string title) {
+			var searchResults = await _client.GetFromJsonAsync<OMDBSearchResponse>($"http://www.omdbapi.com/?s={title}&apikey={_apiKey}");
 
-    public Film GetByImdbId(string imdbId) {
-    }
-  }
+			var res = searchResults.Search;
+
+			var films = new List<Film>();
+
+			foreach (var omdbFilm in searchResults.Search) {
+				var film = new Film
+				{
+					Id = films.Count + 1, 
+					Title = omdbFilm.Title,
+					Poster = omdbFilm.Poster,
+					Imdb = omdbFilm.imdbID,
+					Date = omdbFilm.Year
+				};
+
+				films.Add(film);
+			}
+			return films;
+		}
+
+		public async void GetByImdbId(string imdbId) {
+		}
+	}
 }
