@@ -38,7 +38,17 @@ namespace Premier.Services {
 			return films;
 		}
 
-		public async void GetByImdbId(string imdbId) {
+		public async Task<Film> GetByImdbId(string imdbID) {
+			var omdbFilm = await _client.GetFromJsonAsync<OMDBFilm>($"http://www.omdbapi.com/?i={imdbID}&apikey={_apiKey}");
+
+			var film = new Film { 
+				Title = omdbFilm.Title,
+				Poster = omdbFilm.Poster,
+				Imdb = imdbID,
+				Date = omdbFilm.Year
+			};
+			return film;
+
 		}
 	}
 }
