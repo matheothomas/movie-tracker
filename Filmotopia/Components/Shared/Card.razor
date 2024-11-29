@@ -1,0 +1,16 @@
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">@Text</h5>
+    <p class="card-text">@Year</p>
+  <img src=@Img class="card-img-top" alt="...">
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Text { get; set; }
+    [Parameter]
+    public string? Year { get; set; }
+    [Parameter]
+    public string? Img { get; set; }
+}
