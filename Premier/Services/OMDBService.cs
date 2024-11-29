@@ -16,7 +16,7 @@ namespace Premier.Service {
       _apiKey = configuration["APIKey"];
     }
 
-    public async List<Film> SearchByTitle(string title) {
+    public async IAsyncEnumerable<Film> SearchByTitle(string title) {
       HttpResponseMessage response = await client.GetAsync($"http://www.omdbapi.com/?i={title}&apikey={_apiKey}");
       // CALL JSON convert
     }
