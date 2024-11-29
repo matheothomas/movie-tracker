@@ -7,5 +7,16 @@
         <label for="password">Mot de passe</label>
         <input type="password" id="password">
     </div>
-    <button type="submit">Se connecter</button>
+
+    @if(!@IsRegister){
+      <button type="submit">S'inscrire</button>
+    }
+    else{
+      <button type="submit">Se connecter</button>
+    }
 </form>
+
+@code {
+  [Parameter]
+  public bool IsRegister { get; set; }
+}
