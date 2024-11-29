@@ -32,9 +32,19 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("import")]
-		public async Task<ActionResult> Import(int id)
+		public async Task<ActionResult> Import(string imdbID)
 		{
-			return Ok();
+			
+			var film = await _omdb.GetByImdbId(imdbID);
+
+			if (await _context.Films.Where(f => f.Imdb == imdbID).CountAsync() != 0) {
+				return StatusCode(500, "This film was already added");
+			};
+
+			await _context.Films.AddAsync(film);
+			await _context.SaveChangesAsync();
+
+			return Ok(film);
 		}
 	}
 }
