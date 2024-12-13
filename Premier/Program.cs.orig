@@ -1,0 +1,45 @@
+
+namespace Premier;
+using Premier.Services;
+using Microsoft.AspNetCore.Identity;
+
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+
+        builder.Services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+		builder.Services.AddDbContext<Models.UserContext>();
+		builder.Services.AddSingleton<PasswordHasher<Models.User>>();
+<<<<<<< HEAD
+    builder.Services.AddHttpClient();
+=======
+		builder.Services.AddSingleton<OMDBService>();
+>>>>>>> b9d2c0772a56478303e63842581c553c123647cc
+
+
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseAuthorization();
+
+
+        app.MapControllers();
+
+        app.Run();
+    }
+}

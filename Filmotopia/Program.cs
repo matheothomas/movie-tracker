@@ -1,4 +1,5 @@
 using Filmotopia.Components;
+using Filmotopia.Services;
 
 namespace Filmotopia;
 
@@ -11,6 +12,8 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
+        builder.Services.AddScoped<FilmService>();
+        builder.Services.AddHttpClient();
 
         var app = builder.Build();
 
