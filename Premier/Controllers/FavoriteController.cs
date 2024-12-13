@@ -33,8 +33,8 @@ namespace Premier.Controllers
 
         // DELETE api/<Favorite>/5
         [HttpDelete("remove")]
-        public async Task<ActionResult<Favorite>> DeleteFavorite(int FilmId) {
-			Favorite favorite = await _context.Favorites.FindAsync(FilmId);
+        public async Task<ActionResult<Favorite>> DeleteFavorite(int UserId, int FilmId) {
+			Favorite favorite = await _context.Favorites.Where(f => UserId == f.UserId && f.FilmId == FilmId).FirstOrDefaultAsync();
 
 			if (favorite == null) {
 				return NotFound();
