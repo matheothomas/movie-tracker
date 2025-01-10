@@ -28,7 +28,8 @@
     [Parameter]
     public int Id { get; set; }
 
-    private bool IsFavorite { get; set; }
+    [Parameter]
+    public bool IsFavorite { get; set; }
 
     private void ToggleFavorite(MouseEventArgs e) {
         if (IsFavorite) {

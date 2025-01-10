@@ -1,24 +1,39 @@
 ﻿@page "/FilmsList"
 
 @inject FilmService film
+@inject FavoriteService favorite
 
 <PageTitle>Films List</PageTitle>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
 @foreach (var f in films) {
-<Card 
-    Text=@f.Title 
-    Year=@f.Date
-    Img=@f.Poster
-    Id=@f.Id
-    >
-</Card>
+    @if (favoritesIds.Contains(f.Id)) {
+        <Card 
+            Text=@f.Title 
+            Year=@f.Date
+            Img=@f.Poster
+            Id=@f.Id
+            IsFavorite=true
+            >
+            </Card>
+    } else {
+        <Card 
+            Text=@f.Title 
+            Year=@f.Date
+            Img=@f.Poster
+            Id=@f.Id
+            IsFavorite=false
+            >
+            </Card>
+    }
 }
 </div>
 
 @code {
     private List<Film> films = new List<Film>();
+    private List<int> favoritesIds = new List<int>();
     protected override async Task OnInitializedAsync() {
         films = await film.GetFilms();
+        favoritesIds = await favorite.GetFilmsById();
     }
 }
