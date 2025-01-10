@@ -1,3 +1,5 @@
+@inject FavoriteService favorite
+
 <div class="col">
 <div class="card h-100">
   <div class="card-body">
@@ -5,13 +7,13 @@
     <p class="card-text">@Year</p>
     <img src=@Img class="card-img-top" alt="...">
 
-    <button class="btn btn-link" @onclick="ToggleFavorite">
+    <div>
         @if (IsFavorite) {
-            <i class="fa-solid fa-star" style="color: gold;"></i>
+            <i class="fa-solid fa-star" style="color: gold;" @onclick="ToggleFavorite"></i>
         } else {
-            <i class="fa-regular fa-star" style="color: grey;"></i>
+            <i class="fa-regular fa-star" style="color: grey;" @onclick="ToggleFavorite"></i>
         }
-        </button>
+        </div>
   </div>
 </div>
 </div>
@@ -23,10 +25,17 @@
     public string? Year { get; set; }
     [Parameter]
     public string? Img { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     private bool IsFavorite { get; set; }
 
-    private void ToggleFavorite() {
+    private void ToggleFavorite(MouseEventArgs e) {
+        if (IsFavorite) {
+            favorite.RemoveFilm(0, Id);
+        } else {
+            favorite.AddFilm(0, Id);
+        }
         IsFavorite = !IsFavorite;
     }
 }
