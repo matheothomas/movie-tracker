@@ -1,0 +1,23 @@
+﻿@page "/FavoriteList"
+
+@inject FavoriteService film
+
+<PageTitle>Films List</PageTitle>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+@foreach (var f in films) {
+<Card 
+    Text=@f.Title 
+    Year=@f.Date
+    Img=@f.Poster
+    >
+</Card>
+}
+</div>
+
+@code {
+    private List<Film> films = new List<Film>();
+    protected override async Task OnInitializedAsync() {
+        films = await film.GetFilms();
+    }
+}

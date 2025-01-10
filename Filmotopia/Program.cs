@@ -13,6 +13,7 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
         builder.Services.AddScoped<FilmService>();
+        builder.Services.AddScoped<FavoriteService>();
         builder.Services.AddHttpClient();
 
         var app = builder.Build();
