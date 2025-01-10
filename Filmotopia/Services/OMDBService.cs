@@ -8,9 +8,9 @@ public class OMDBService {
         _httpClient = httpClient;
     }
 
-    public async Task<Film> GetFilm(string s)
+    public async Task<List<Film>> GetFilm(string s)
     {
-        var film = await _httpClient.GetFromJsonAsync<Film>($"http://localhost:5000/api/OMDB/Search/{s}");
+        var film = await _httpClient.GetFromJsonAsync<List<Film>>($"http://localhost:5041/api/OMDB/search?title={s}");
         return film;
     }
 }

@@ -1,0 +1,33 @@
+@page "/Search"
+
+
+@inject OMDBService omdb
+
+<PageTitle>Search</PageTitle>
+
+<h1>Rechercher un Film</h1>
+
+<div>
+  <input @bind="input" type="text" placeholder="Rechercher" id="rechercher">
+  <button type="button" @onclick="search">Valider</button>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+  @foreach (var f in films) {
+    <Card 
+      Text=@f.Title 
+      Year=@f.Date
+      Img=@f.Poster
+      >
+    </Card>
+  }
+  </div>
+</div>
+
+@code {
+    private string input = "";
+    private List<Film> films = new List<Film>();
+    private async Task search() {
+      Console.WriteLine(input);
+      films = await omdb.GetFilm(input);
+  }
+}
+

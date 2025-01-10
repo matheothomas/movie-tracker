@@ -14,6 +14,7 @@ public class Program
             .AddInteractiveServerComponents();
         builder.Services.AddScoped<FilmService>();
         builder.Services.AddScoped<FavoriteService>();
+        builder.Services.AddScoped<OMDBService>();
         builder.Services.AddHttpClient();
 
         var app = builder.Build();
