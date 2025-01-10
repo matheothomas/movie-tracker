@@ -20,11 +20,18 @@ namespace Premier.Controllers
             return await _context.Favorites.Where(f => UserId == f.UserId).Select(f => f.FilmId).ToListAsync();
         }
 
+		[HttpGet("Film/{UserId}")]
+        public async Task<ActionResult<IEnumerable<Film>>> GetFavoriteFilm(int UserId) {
+            var favorites = await _context.Favorites.Where(f => UserId == f.UserId).Select(f => f.FilmId).ToListAsync();
+			var films = await _context.Films.Where(f => favorites.Contains(f.Id)).ToListAsync();
+			return films;
+        }
+
         // POST api/<Favorite>
         [HttpPost("add")]
-        public async Task<ActionResult<Favorite>> PostFavorite(int FilmIdSuppr) {
-			var favorite = new Favorite { FilmId = FilmIdSuppr};
-			favorite.UserId = 0;
+        public async Task<ActionResult<Favorite>> PostFavorite(int UserId, int FilmId) {
+			var favorite = new Favorite { FilmId = FilmId};
+			favorite.UserId = UserId;
 			_context.Favorites.Add(favorite);
 			await _context.SaveChangesAsync();
 
