@@ -9,8 +9,16 @@ public class FavoriteService {
     }
 
     public async Task<List<Film>> GetFilms() {
-        var films = await _httpClient.GetFromJsonAsync<List<Film>>("http://localhost:5041/api/Favorite/0");
+        var films = await _httpClient.GetFromJsonAsync<List<Film>>("http://localhost:5041/api/Favorite/Film/0");
         return films;
     }
+
+	public async Task RemoveFilm(int userId, int filmId) {
+		await _httpClient.DeleteAsync($"http://localhost:5041/api/Favorite/remove?UserId={userId}&FilmId={filmId}");
+	}
+
+	public async Task AddFilm(int userId, int filmId) {
+		await _httpClient.PostAsync($"http://localhost:5041/api/Favorite/add?UserId={userId}&FilmId={filmId}", null);
+	}
 
 }
