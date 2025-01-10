@@ -13,4 +13,12 @@ public class FavoriteService {
         return films;
     }
 
+	public async Task RemoveFilm(int userId, int filmId) {
+		await _httpClient.DeleteAsync($"http://localhost:5041/api/Favorite/remove?UserId={userId}&FilmId={filmId}");
+	}
+
+	public async Task AddFilm(int userId, int filmId) {
+		await _httpClient.PostAsync($"http://localhost:5041/api/Favorite/add?UserId={userId}&FilmId={filmId}", null);
+	}
+
 }

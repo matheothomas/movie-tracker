@@ -29,9 +29,9 @@ namespace Premier.Controllers
 
         // POST api/<Favorite>
         [HttpPost("add")]
-        public async Task<ActionResult<Favorite>> PostFavorite(int FilmIdSuppr) {
-			var favorite = new Favorite { FilmId = FilmIdSuppr};
-			favorite.UserId = 0;
+        public async Task<ActionResult<Favorite>> PostFavorite(int UserId, int FilmId) {
+			var favorite = new Favorite { FilmId = FilmId};
+			favorite.UserId = UserId;
 			_context.Favorites.Add(favorite);
 			await _context.SaveChangesAsync();
 
