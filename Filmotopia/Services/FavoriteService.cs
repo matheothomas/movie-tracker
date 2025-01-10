@@ -9,7 +9,7 @@ public class FavoriteService {
     }
 
     public async Task<List<Film>> GetFilms() {
-        var films = await _httpClient.GetFromJsonAsync<List<Film>>("http://localhost:5041/api/Favorite/0");
+        var films = await _httpClient.GetFromJsonAsync<List<Film>>("http://localhost:5041/api/Favorite/Film/0");
         return films;
     }
 

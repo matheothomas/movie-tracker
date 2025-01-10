@@ -20,6 +20,13 @@ namespace Premier.Controllers
             return await _context.Favorites.Where(f => UserId == f.UserId).Select(f => f.FilmId).ToListAsync();
         }
 
+		[HttpGet("Film/{UserId}")]
+        public async Task<ActionResult<IEnumerable<Film>>> GetFavoriteFilm(int UserId) {
+            var favorites = await _context.Favorites.Where(f => UserId == f.UserId).Select(f => f.FilmId).ToListAsync();
+			var films = await _context.Films.Where(f => favorites.Contains(f.Id)).ToListAsync();
+			return films;
+        }
+
         // POST api/<Favorite>
         [HttpPost("add")]
         public async Task<ActionResult<Favorite>> PostFavorite(int FilmIdSuppr) {
