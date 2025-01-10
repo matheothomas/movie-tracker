@@ -13,6 +13,11 @@ public class FavoriteService {
         return films;
     }
 
+	public async Task<List<int>> GetFilmsById() {
+		var filmsId = await _httpClient.GetFromJsonAsync<List<int>>("http://localhost:5041/api/Favorite/0");
+		return filmsId;
+	}
+
 	public async Task RemoveFilm(int userId, int filmId) {
 		await _httpClient.DeleteAsync($"http://localhost:5041/api/Favorite/remove?UserId={userId}&FilmId={filmId}");
 	}
