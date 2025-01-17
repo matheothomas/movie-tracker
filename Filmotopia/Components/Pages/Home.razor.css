@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.image {
+    margin: auto;
+    max-width: 90%;
+    height: auto;
+}

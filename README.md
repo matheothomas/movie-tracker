@@ -11,7 +11,7 @@ It is a web application to track which movies have been seen by a user, written 
 - [ ] Utilise l'authentification JWT
 - [x] Utilise l'entity framework pour la base de données sqlite
 - [ ] Controller User:
-    - [-] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
+    - [ ] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
     - [ ] Récupérer un utilisateur par son pseudo et son mot de passe (login)
     - [ ] Ajouter un utilisateur (register)
     - [ ] Modifier un utilisateur (Pseudo, Password, Role)
@@ -31,7 +31,7 @@ It is a web application to track which movies have been seen by a user, written 
 - [x] Utilisation de l'injection de dépendance
 - [ ] Utilisation du méchanisme d'authentification pour protéger les routes
 - [ ] Configuration du JWT
-- [-] 2 Services (JWT et OMDB)
+- [ ] 2 Services (JWT et OMDB)
 - [ ] Gestion des erreurs (try catch, throw)
 - [ ] Réponse de code HTTP approprié 200, 404, 500, ...
 - [x] Utilisation de async await pour les appels API, et l'accès BDD
