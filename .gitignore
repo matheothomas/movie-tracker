@@ -6,6 +6,7 @@ project.lock.json
 nupkg/
 *.db*
 Premier/.appsettings.json
+Premier/appsettings.json
 
 # Visual Studio Code
 .vscode/
