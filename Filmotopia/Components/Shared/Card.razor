@@ -6,7 +6,11 @@
   <div class="card-body">
     <h5 class="card-title">@Text</h5>
     <p class="card-text">@Year</p>
-    <img src=@Img class="card-img-top" alt="...">
+    @if(@Img == "N/A") {
+        <img src="No-image-found.png" class="card-img-top" alt="Movie image">
+    } else {
+        <img src=@Img class="card-img-top" alt="Movie image">
+    }
 
     <div>
     @if (IsImported){
