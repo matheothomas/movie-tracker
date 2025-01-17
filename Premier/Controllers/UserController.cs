@@ -54,11 +54,12 @@ namespace Premier.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
 			User? user = await _context.Users.FirstOrDefaultAsync(u => u.Pseudo==userLogin.Pseudo);
-			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
-
 			if (user == null) {
 				return NotFound();
 			}
+			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
+
+			
 
 			if (result == PasswordVerificationResult.Success) {
 				return Ok(user);
