@@ -8,15 +8,15 @@ It is a web application to track which movies have been seen by a user, written 
 
 ### Backend
 
-- [ ] Utilise l'authentification JWT
+- [-] Utilise l'authentification JWT
 - [x] Utilise l'entity framework pour la base de données sqlite
-- [ ] Controller User:
-    - [ ] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
-    - [ ] Récupérer un utilisateur par son pseudo et son mot de passe (login)
-    - [ ] Ajouter un utilisateur (register)
-    - [ ] Modifier un utilisateur (Pseudo, Password, Role)
-    - [ ] Supprimer un utilisateur
-    - [ ] Le mot de passe est hashé et n'est pas renvoyé
+- [-] Controller User:
+    - [-] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
+    - [-] Récupérer un utilisateur par son pseudo et son mot de passe (login)
+    - [-] Ajouter un utilisateur (register)
+    - [-] Modifier un utilisateur (Pseudo, Password, Role)
+    - [-] Supprimer un utilisateur
+    - [x] Le mot de passe est hashé et n'est pas renvoyé
 - [x] Controller Favorite:
     - [x] Récupérer les favoris d'un utilisateur
     - [x] Ajouter un favori
@@ -27,11 +27,11 @@ It is a web application to track which movies have been seen by a user, written 
 - [x]Controller OMDB:
     - [x] Rechercher un film par son titre
     - [x] Importer des films depuis l'API OMDB
-- [ ] Utilisation de la configuration pour les secrets (Clé d'API OMDB, Secret JWT)
+- [- manque dans le program.cs] Utilisation de la configuration pour les secrets (Clé d'API OMDB, Secret JWT)
 - [x] Utilisation de l'injection de dépendance
-- [ ] Utilisation du méchanisme d'authentification pour protéger les routes
-- [ ] Configuration du JWT
-- [ ] 2 Services (JWT et OMDB)
+- [- en cours] Utilisation du méchanisme d'authentification pour protéger les routes
+- [?] Configuration du JWT
+- [x] 2 Services (JWT et OMDB)
 - [ ] Gestion des erreurs (try catch, throw)
 - [ ] Réponse de code HTTP approprié 200, 404, 500, ...
 - [x] Utilisation de async await pour les appels API, et l'accès BDD
