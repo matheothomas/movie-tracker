@@ -4,9 +4,11 @@ using Premier.Models;
 using Premier.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Premier.Controllers
 {
+	[Authorize]
     [Route("api/[controller]")]
     [Controller]
     public class UserController : ControllerBase {
@@ -22,12 +24,14 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("all")]
+		[Authorize(Roles = "User")]
 		public async Task<ActionResult<IEnumerable<User>>> GetAllUser() {
 			return await _context.Users.ToArrayAsync();
 		}
 
 
 		[HttpGet("{id}")]
+		[Authorize]
 		public async Task<ActionResult<User>> GetUser(int id)
 		{
 			Console.WriteLine(id);
@@ -42,6 +46,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("register")]
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			var user = new User { Password = "" };
 
@@ -55,6 +60,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("login")]
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
 			User? user = await _context.Users.FirstOrDefaultAsync(u => u.Pseudo==userLogin.Pseudo);
 			if (user == null) {
@@ -71,6 +77,7 @@ namespace Premier.Controllers
 
 
 		[HttpPut("{id}")]
+		[Authorize]
 		public async Task<ActionResult<User>> PutUser(User userUpdate)
 		{
 			User? user = await _context.Users.FindAsync(userUpdate.Id);
@@ -95,6 +102,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[Authorize]
 		public async Task<IActionResult> DeleteUser(int id)
 		{
 			// on récupère la user que l'on souhaite supprimer
