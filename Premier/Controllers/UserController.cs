@@ -1,21 +1,24 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Premier.Models;
+using Premier.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 namespace Premier.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [Controller]
     public class UserController : ControllerBase {
 	
 		private readonly UserContext _context;
 		private readonly PasswordHasher<User> _hasher;
-		public UserController(UserContext ctx, PasswordHasher<User> hasher)
+		private readonly JWTService _jwt;
+		public UserController(UserContext ctx, PasswordHasher<User> hasher, JWTService jwt)
 		{
 			_context = ctx;
 			_hasher = hasher;
+			_jwt = jwt;
 		}
 
 		[HttpGet("all")]
@@ -58,11 +61,9 @@ namespace Premier.Controllers
 				return NotFound();
 			}
 			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
-
-			
-
 			if (result == PasswordVerificationResult.Success) {
-				return Ok(user);
+				var token = await _jwt.GetJwt(user.Pseudo, "User", user.Id);
+				return Ok(token);
 			}
 
 			return StatusCode(400, "Password do not match");
