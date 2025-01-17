@@ -1,30 +1,37 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Premier.Models;
+using Premier.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Premier.Controllers
 {
+	[Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+    [Controller]
     public class UserController : ControllerBase {
 	
 		private readonly UserContext _context;
 		private readonly PasswordHasher<User> _hasher;
-		public UserController(UserContext ctx, PasswordHasher<User> hasher)
+		private readonly JWTService _jwt;
+		public UserController(UserContext ctx, PasswordHasher<User> hasher, JWTService jwt)
 		{
 			_context = ctx;
 			_hasher = hasher;
+			_jwt = jwt;
 		}
 
 		[HttpGet("all")]
+		[Authorize(Roles = "User")]
 		public async Task<ActionResult<IEnumerable<User>>> GetAllUser() {
 			return await _context.Users.ToArrayAsync();
 		}
 
 
 		[HttpGet("{id}")]
+		[Authorize]
 		public async Task<ActionResult<User>> GetUser(int id)
 		{
 			Console.WriteLine(id);
@@ -39,6 +46,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("register")]
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			var user = new User { Password = "" };
 
@@ -52,16 +60,16 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("login")]
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
 			User? user = await _context.Users.FirstOrDefaultAsync(u => u.Pseudo==userLogin.Pseudo);
-			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
-
 			if (user == null) {
 				return NotFound();
 			}
-
+			var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
 			if (result == PasswordVerificationResult.Success) {
-				return Ok(user);
+				var token = await _jwt.GetJwt(user.Pseudo, "User", user.Id);
+				return Ok(token);
 			}
 
 			return StatusCode(400, "Password do not match");
@@ -69,6 +77,7 @@ namespace Premier.Controllers
 
 
 		[HttpPut("{id}")]
+		[Authorize]
 		public async Task<ActionResult<User>> PutUser(User userUpdate)
 		{
 			User? user = await _context.Users.FindAsync(userUpdate.Id);
@@ -93,6 +102,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[Authorize]
 		public async Task<IActionResult> DeleteUser(int id)
 		{
 			// on récupère la user que l'on souhaite supprimer
