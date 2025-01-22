@@ -2,17 +2,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Premier.Models;
 using Premier.Services;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+
 
 namespace Premier.Controllers
 {
 	[Authorize]
-    [Route("api/[controller]")]
-    [Controller]
-    public class UserController : ControllerBase {
-	
+	[Route("api/[controller]")]
+	[Controller]
+	public class UserController : ControllerBase {
+
 		private readonly UserContext _context;
 		private readonly PasswordHasher<User> _hasher;
 		private readonly JWTService _jwt;
@@ -24,14 +30,15 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("all")]
-		[Authorize(Roles = "User")]
+		/*[Authorize(Roles = "Admin")]*/
+		[AllowAnonymous]
 		public async Task<ActionResult<IEnumerable<User>>> GetAllUser() {
 			return await _context.Users.ToArrayAsync();
 		}
 
 
 		[HttpGet("{id}")]
-		[Authorize]
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult<User>> GetUser(int id)
 		{
 			Console.WriteLine(id);
@@ -86,6 +93,11 @@ namespace Premier.Controllers
 				return NotFound();
 			}
 
+			int realId = await GetId();
+			if (realId != user.Id) {
+				return StatusCode(403, "You cannot change another user");
+			}
+
 			user.Pseudo = userUpdate.Pseudo;
 			user.Password = userUpdate.Password;
 			_context.Entry(user).State = EntityState.Modified;
@@ -98,25 +110,34 @@ namespace Premier.Controllers
 			{
 				return StatusCode(500, "Erreur de concurrence");
 			}
-			return Ok(user);
+			return StatusCode(203, "User modified");
 		}
 
 		[HttpDelete("{id}")]
 		[Authorize]
 		public async Task<IActionResult> DeleteUser(int id)
 		{
-			// on récupère la user que l'on souhaite supprimer
 			User? user = await _context.Users.FindAsync(id);
 			if (user == null)
 			{
 				return NotFound();
 			}
-			// on indique a notre contexte que l'objet a été supprimé
+
+			int realId = await GetId();
+			if (realId != user.Id) {
+				return StatusCode(403, "You cannot delete another user");
+			}
+
 			_context.Users.Remove(user);
-			// on enregistre les modifications
 			await _context.SaveChangesAsync();
-			// on retourne un code 204 pour indiquer que la suppression a bien eu lieu
-			return NoContent();
+			return StatusCode(204, "User deleted");
+		}
+
+		[HttpGet]
+		[Authorize]
+		public async Task<int> GetId() {
+			int userId = int.Parse(User.FindFirst("Id").Value);
+			return userId;
 		}
 
 	}
