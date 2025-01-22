@@ -1,5 +1,6 @@
 using Filmotopia.Components;
 using Filmotopia.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Filmotopia;
 
@@ -15,7 +16,9 @@ public class Program
         builder.Services.AddScoped<FilmService>();
         builder.Services.AddScoped<FavoriteService>();
         builder.Services.AddScoped<OMDBService>();
+        builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
         builder.Services.AddHttpClient();
+        builder.Services.AddAuthenticationCore();
 
         var app = builder.Build();
 
@@ -27,6 +30,9 @@ public class Program
 
         app.UseStaticFiles();
         app.UseAntiforgery();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
