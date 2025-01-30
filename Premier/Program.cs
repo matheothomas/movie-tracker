@@ -3,6 +3,7 @@ namespace Premier;
 using Premier.Services;
 using Microsoft.AspNetCore.Identity;
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -57,7 +58,7 @@ public class Program
 					ValidateIssuerSigningKey = true,
 					ValidAudience = "localhost:5041",
 					ValidIssuer = "localhost:5041",
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("A Very Secret SecretA Very Secret Secret")),
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTSecret"])),
 					RoleClaimType = ClaimTypes.Role};
 					});
 
