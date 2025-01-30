@@ -23,7 +23,7 @@ It is a web application to track which movies have been seen by a user, written 
     - [x] Supprimer un favori
 - [ ]Controller Movie:
     - [x] Récupérer les films
-    - [ ] Supprimer un film
+    - [x] Supprimer un film
 - [x]Controller OMDB:
     - [x] Rechercher un film par son titre
     - [x] Importer des films depuis l'API OMDB
