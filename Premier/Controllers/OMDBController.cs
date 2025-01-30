@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Core;
 
 namespace Premier.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class OMDBController : ControllerBase
@@ -20,6 +21,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("search")]
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> Search(string title)
 		{
 			var films = await _omdb.SearchByTitle(title);
@@ -32,6 +34,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("import")]
+		[Authorize]
 		public async Task<ActionResult> Import(string imdbID)
 		{
 			
