@@ -6,8 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Core;
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+
 namespace Premier.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class OMDBController : ControllerBase
@@ -20,6 +25,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("search")]
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> Search(string title)
 		{
 			var films = await _omdb.SearchByTitle(title);
@@ -32,6 +38,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("import")]
+		[Authorize]
 		public async Task<ActionResult> Import(string imdbID)
 		{
 			

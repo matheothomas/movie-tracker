@@ -8,26 +8,26 @@ It is a web application to track which movies have been seen by a user, written 
 
 ### Backend
 
-- [-] Utilise l'authentification JWT
+- [x] Utilise l'authentification JWT
 - [x] Utilise l'entity framework pour la base de données sqlite
-- [-] Controller User:
-    - [-] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
-    - [-] Récupérer un utilisateur par son pseudo et son mot de passe (login)
-    - [-] Ajouter un utilisateur (register)
-    - [-] Modifier un utilisateur (Pseudo, Password, Role)
-    - [-] Supprimer un utilisateur
+- [x] Controller User:
+    - [x] Récupérer la liste des utilisateurs (Id, Pseudo, Role)
+    - [x] Récupérer un utilisateur par son pseudo et son mot de passe (login)
+    - [x] Ajouter un utilisateur (register)
+    - [x] Modifier un utilisateur (Pseudo, Password, Role)
+    - [x] Supprimer un utilisateur
     - [x] Le mot de passe est hashé et n'est pas renvoyé
 - [x] Controller Favorite:
     - [x] Récupérer les favoris d'un utilisateur
     - [x] Ajouter un favori
     - [x] Supprimer un favori
-- [ ]Controller Movie:
+- [x]Controller Movie:
     - [x] Récupérer les films
-    - [ ] Supprimer un film
+    - [x] Supprimer un film
 - [x]Controller OMDB:
     - [x] Rechercher un film par son titre
     - [x] Importer des films depuis l'API OMDB
-- [- manque dans le program.cs] Utilisation de la configuration pour les secrets (Clé d'API OMDB, Secret JWT)
+- [x] Utilisation de la configuration pour les secrets (Clé d'API OMDB, Secret JWT)
 - [x] Utilisation de l'injection de dépendance
 - [- en cours] Utilisation du méchanisme d'authentification pour protéger les routes
 - [?] Configuration du JWT
