@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Premier.Controllers
 {
-	[Authorize]
+	/*[Authorize]*/
     [Route("api/[controller]")]
     [ApiController]
     public class FavoriteController : ControllerBase {
@@ -21,7 +21,7 @@ namespace Premier.Controllers
 		}
 
         [HttpGet("{UserId}")]
-		[Authorize]
+		/*[Authorize]*/
         public async Task<ActionResult<IEnumerable<int>>> GetFavorite(int UserId) {
 
 			int realId = await GetId();
@@ -33,7 +33,7 @@ namespace Premier.Controllers
         }
 
 		[HttpGet("Film/{UserId}")]
-		[Authorize]
+		/*[Authorize]*/
         public async Task<ActionResult<IEnumerable<Film>>> GetFavoriteFilm(int UserId) {
 
 			int realId = await GetId();
@@ -48,7 +48,7 @@ namespace Premier.Controllers
 
         // POST api/<Favorite>
         [HttpPost("add")]
-		[Authorize]
+		/*[Authorize]*/
         public async Task<ActionResult<Favorite>> PostFavorite(int UserId, int FilmId) {
 
 			int realId = await GetId();
@@ -66,7 +66,7 @@ namespace Premier.Controllers
 
         // DELETE api/<Favorite>/5
         [HttpDelete("remove")]
-		[Authorize]
+		/*[Authorize]*/
         public async Task<ActionResult<Favorite>> DeleteFavorite(int UserId, int FilmId) {
 
 			int realId = await GetId();
@@ -87,7 +87,7 @@ namespace Premier.Controllers
         }
 
 		[HttpGet]
-		[Authorize]
+		/*[Authorize]*/
 		public async Task<int> GetId() {
 			int userId = int.Parse(User.FindFirst("Id").Value);
 			return userId;
