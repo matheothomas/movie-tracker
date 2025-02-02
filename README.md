@@ -21,10 +21,10 @@ It is a web application to track which movies have been seen by a user, written 
     - [x] Récupérer les favoris d'un utilisateur
     - [x] Ajouter un favori
     - [x] Supprimer un favori
-- [x]Controller Movie:
+- [x] Controller Movie:
     - [x] Récupérer les films
     - [x] Supprimer un film
-- [x]Controller OMDB:
+- [x] Controller OMDB:
     - [x] Rechercher un film par son titre
     - [x] Importer des films depuis l'API OMDB
 - [x] Utilisation de la configuration pour les secrets (Clé d'API OMDB, Secret JWT)
