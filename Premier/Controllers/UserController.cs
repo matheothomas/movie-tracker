@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Premier.Controllers
 {
-	/*[Authorize]*/
+	[Authorize]
 	[Route("api/[controller]")]
 	[Controller]
 	public class UserController : ControllerBase {
@@ -29,14 +29,14 @@ namespace Premier.Controllers
 
 		[HttpGet("all")]
 		/*[Authorize(Roles = "Admin")]*/
-		/*[AllowAnonymous]*/
+		[AllowAnonymous]
 		public async Task<ActionResult<IEnumerable<User>>> GetAllUser() {
 			return await _context.Users.ToArrayAsync();
 		}
 
 
 		[HttpGet("{id}")]
-		/*[Authorize(Roles = "Admin")]*/
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult<User>> GetUser(int id)
 		{
 			Console.WriteLine(id);
@@ -51,7 +51,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("register")]
-		/*[AllowAnonymous]*/
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> PostUser(UserCreation userCreation) {
 			var user = new User { Password = "" };
 
@@ -65,7 +65,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpPost("login")]
-		/*[AllowAnonymous]*/
+		[AllowAnonymous]
 		public async Task<ActionResult<User>> LoginUser(UserCreation userLogin) {
 			User? user = await _context.Users.FirstOrDefaultAsync(u => u.Pseudo==userLogin.Pseudo);
 			if (user == null) {
@@ -82,7 +82,7 @@ namespace Premier.Controllers
 
 
 		[HttpPut("{id}")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult<User>> PutUser(User userUpdate)
 		{
 			User? user = await _context.Users.FindAsync(userUpdate.Id);
@@ -112,7 +112,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<IActionResult> DeleteUser(int id)
 		{
 			User? user = await _context.Users.FindAsync(id);
@@ -132,7 +132,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<int> GetId() {
 			int userId = int.Parse(User.FindFirst("Id").Value);
 			return userId;

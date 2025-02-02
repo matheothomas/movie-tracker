@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Premier.Controllers
 {
-	/*[Authorize]*/
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class OMDBController : ControllerBase
@@ -25,7 +25,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("search")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> Search(string title)
 		{
 			var films = await _omdb.SearchByTitle(title);
@@ -38,7 +38,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("import")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult> Import(string imdbID)
 		{
 			

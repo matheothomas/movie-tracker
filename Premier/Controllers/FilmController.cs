@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Premier.Controllers
 {
-	/*[Authorize]*/
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class FilmController : ControllerBase
@@ -24,7 +24,7 @@ namespace Premier.Controllers
 
 		// GET: api/<Film>
 		[HttpGet]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> GetAllFilms()
 		{
 			return await _context.Films.ToArrayAsync();
@@ -32,7 +32,7 @@ namespace Premier.Controllers
 
 		// GET api/<Film>
 		[HttpGet("search")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> GetFilm(string title)
 		{
 			var films = await _context.Films.Where(f => f.Title == title).Select(f => f).ToListAsync();
@@ -45,7 +45,7 @@ namespace Premier.Controllers
 		}
 
 		[HttpGet("info")]
-		/*[Authorize]*/
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<Film>>> GetInfoFilms([FromQuery] int[] ids)
 		{
 			var films = await _context.Films.Where(f => ids.Contains(f.Id)).Select(f => f).ToListAsync();
